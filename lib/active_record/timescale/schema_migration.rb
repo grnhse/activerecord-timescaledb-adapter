@@ -43,12 +43,31 @@ module ActiveRecord
       def create_hyper_table(relation, time_column_name: "created_at", **options, &block)
         hyper_table_options = HyperTableOptions.new(**options)
         create_table(relation, **hyper_table_options.args, &block) unless block.nil?
-        execute "SELECT create_hyper_table('#{relation}', '#{time_column_name}', #{hyper_table_options.to_sql})"
+        execute "SELECT create_hyper_table(#{quote_table_name(relation)}, '#{time_column_name}', #{hyper_table_options.to_sql})"
       end
 
       # See create_hyper_table for examples. Works exactly the same but the distributed option is forced to TRUE
       def create_distributed_hyper_table(relation, **options, &block)
         create_hyper_table(relation, **options.merge({distributed: true}), &block)
+      end
+
+      # @param relation [String] Name of the hypertable or continuous aggregate to create the policy for.
+      # @param drop_after [String, Integer] Chunks fully older than this interval when the policy is run are dropped
+      # @param if_not_exists [Boolean, nil] Set to true to avoid throwing an error if the drop_chunks_policy already exists. A notice is issued instead. Defaults to false.
+      def add_retention_policy(relation, drop_after:, if_not_exists: false)
+        drop_after_string =
+          if drop_after.is_a? String
+            "INTERVAL '#{drop_after}'"
+          else
+            "BIGINT '#{drop_after}'"
+          end
+
+        args = []
+        args << quote_table_name(relation)
+        args << drop_after_string
+        args << "if_not_exists => TRUE" if if_not_exists
+
+        execute "SELECT add_retention_policy(#{args.join(', ')})"
       end
 
       class HyperTableOptions
