@@ -5,11 +5,6 @@ require "active_support/concern"
 
 module ActiveRecord
   module Timescale
-  end
-end
-
-module ActiveRecord
-  module Timescale
     module SchemaMigration
       extend ActiveSupport::Concern
 
