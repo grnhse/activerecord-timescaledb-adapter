@@ -27,6 +27,9 @@ module ActiveRecord
       # # check_ins table already exists
       # create_hyper_table :check_ins, time_column_name: 'checked_in_at', migrate_data: true
       #
+      # # Simplest example
+      # create_hyper_table :check_ins
+      #
       # @param relation [String] Identifier of table to convert to hypertable.
       # @param options.time_column_name [String] Name of the column containing time values as well as the primary column to partition by.
       # @param options.partitioning_column [String, nil] Name of an additional column to partition by.
