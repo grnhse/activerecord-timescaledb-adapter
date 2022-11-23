@@ -67,7 +67,7 @@ module ActiveRecord
         args << drop_after_string
         args << "if_not_exists => TRUE" if if_not_exists
 
-        execute "SELECT add_retention_policy(#{args.join(', ')})"
+        execute "SELECT add_retention_policy(#{args.join(", ")})"
       end
 
       class HyperTableOptions
