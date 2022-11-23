@@ -132,7 +132,7 @@ module ActiveRecord
           sql << "partitioning_func => '#{@partitioning_func}'" unless @partitioning_func.nil?
           sql << "associated_schema_name => '#{@associated_schema_name}'"
           sql << "associated_table_prefix => '#{@associated_table_prefix}'"
-          sql << "migrate_date => #{@migrate_data}"
+          sql << "migrate_data => #{@migrate_data}"
           sql << "time_partitioning_func => '#{@time_partitioning_func}'" unless @time_partitioning_func.nil?
           sql << "replicator_factor => #{@replicator_factor}" unless @replicator_factor.nil?
           sql << "data_nodes => '{ #{@data_nodes.join(", ")} }'" if @data_nodes.any?
