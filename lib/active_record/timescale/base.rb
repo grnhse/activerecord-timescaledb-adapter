@@ -19,7 +19,7 @@ module ActiveRecord
       # @param value [*] A set of values to partition into a histogram
       # @param min [Integer] The histogram's lower bound used in bucketing (inclusive)
       # @param max [Integer] The histogram's upper bound used in bucketing (exclusive)
-      # @param npartitions [Integer] The integer value for the number of histogram buckets (partitions)
+      # @param nbuckets [Integer] The integer value for the number of histogram buckets (partitions)
       scope :histogram, lambda do |value, min, max, nbuckets|
         select(sanitize_sql(["histogram(?, ?, ?, ?)", value, min, max, nbuckets]))
       end
