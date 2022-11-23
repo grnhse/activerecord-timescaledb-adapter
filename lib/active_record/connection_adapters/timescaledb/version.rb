@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Activerecord
-  module Timescaledb
-    module Adapter
+module ActiveRecord
+  module ConnectionAdapters
+    module TimescaleDB
       VERSION = "0.1.0"
     end
   end
