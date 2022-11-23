@@ -43,7 +43,7 @@ module ActiveRecord
       def create_hyper_table(relation, time_column_name: "created_at", **options, &block)
         hyper_table_options = HyperTableOptions.new(**options)
         create_table(relation, **hyper_table_options.args, &block) unless block.nil?
-        execute "SELECT create_hyper_table(#{quote_table_name(relation)}, '#{time_column_name}', #{hyper_table_options.to_sql})"
+        execute "SELECT create_hyper_table(#{quote_table_name(relation)}, #{quote_column_name(time_column_name)}, #{hyper_table_options.to_sql})"
       end
 
       # See create_hyper_table for examples. Works exactly the same but the distributed option is forced to TRUE
