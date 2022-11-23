@@ -25,7 +25,7 @@ module ActiveRecord
             expect(self).to receive(:create_table).once
 
             create_hyper_table :check_ins, time_column_name: "checked_in_at", id: false do |table|
-              table.datetime :checkd_in_at, null: false, index: true
+              table.datetime :checked_in_at, null: false, index: true
               table.timestamps
             end
           end
@@ -38,6 +38,19 @@ module ActiveRecord
             expect(self).not_to receive(:create_table)
 
             create_hyper_table :check_ins, time_column_name: "checked_in_at"
+          end
+        end
+
+        it "passes default active record options to the create_table method" do
+          migrate do
+            allow(self).to receive(:create_table)
+            allow(self).to receive(:create_hyper_table).and_call_original
+            expect(self).to receive(:create_table).with(:check_ins, hash_including(id: false)).once
+
+            create_hyper_table :check_ins, time_column_name: "checked_in_at", id: false do |table|
+              table.datetime :checked_in_at, null: false, index: true
+              table.timestamps
+            end
           end
         end
       end

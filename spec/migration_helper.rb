@@ -15,7 +15,7 @@ module MigrationHelper
     new_class = Class.new(@migration_class)
     new_class.send(:define_method, :change, &block)
 
-    %i[allow receive expect].each do |method|
+    %i[allow receive expect hash_including].each do |method|
       new_class.define_method(method) do |*args|
         rspec.send(method, *args)
       end

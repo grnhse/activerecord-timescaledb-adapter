@@ -66,7 +66,7 @@ module ActiveRecord
           replicator_factor: nil,
           data_nodes: [],
           distributed: nil,
-          **_rest
+          **other_args
         )
 
           @partitioning_column = partitioning_column
@@ -82,24 +82,27 @@ module ActiveRecord
           @replicator_factor = replicator_factor
           @data_nodes = data_nodes
           @distributed = distributed
+          @other_args = other_args
         end
 
         def args
-          {
-            partitioning_column: @partitioning_column,
-            number_partitions: @number_partitions,
-            chunk_time_interval: @chunk_time_interval,
-            create_default_indexes: @create_default_indexes,
-            if_not_exists: @if_not_exists,
-            partitioning_func: @partitioning_func,
-            associated_schema_name: @associated_schema_name,
-            associated_table_prefix: @associated_table_prefix,
-            migrate_data: @migrate_data,
-            time_partitioning_func: @time_partitioning_func,
-            replicator_factor: @replicator_factor,
-            data_nodes: @data_nodes,
-            distributed: @distributed
-          }
+          @other_args.merge(
+            {
+              partitioning_column: @partitioning_column,
+              number_partitions: @number_partitions,
+              chunk_time_interval: @chunk_time_interval,
+              create_default_indexes: @create_default_indexes,
+              if_not_exists: @if_not_exists,
+              partitioning_func: @partitioning_func,
+              associated_schema_name: @associated_schema_name,
+              associated_table_prefix: @associated_table_prefix,
+              migrate_data: @migrate_data,
+              time_partitioning_func: @time_partitioning_func,
+              replicator_factor: @replicator_factor,
+              data_nodes: @data_nodes,
+              distributed: @distributed
+            }
+          )
         end
 
         def to_sql
