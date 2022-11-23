@@ -44,9 +44,7 @@ module ActiveRecord
       # @param options.distributed [Boolean, nil] Set to TRUE to create distributed hypertable. If not provided, value is determined by the timescaledb.hypertable_distributed_default GUC. When creating a distributed hypertable, consider using create_distributed_hypertable in place of create_hypertable. Default is NULL.
       def create_hyper_table(relation, time_column_name: "created_at", **options, &block)
         hyper_table_options = HyperTableOptions.new(**options)
-
         create_table(relation, **hyper_table_options.args, &block) unless block.nil?
-
         execute "SELECT create_hyper_table('#{relation}', '#{time_column_name}', #{hyper_table_options.to_sql})"
       end
 
